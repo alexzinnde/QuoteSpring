@@ -46,10 +46,10 @@ app.get('/api/background', (req, res) => {
 // ========== WEATHER ROUTES ================
 app.get('/api/weather', (req, res) => {
   const { lat, lon } = req.query;
-  // axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
-  //   .then(({ data }) => res.send(data));
+  axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
+    .then(({ data }) => res.send(data));
 
-  res.send(require('../Sample_Data/sampleWeather'));
+  // res.send(require('../Sample_Data/sampleWeather'));
 });
 
 module.exports = app;
