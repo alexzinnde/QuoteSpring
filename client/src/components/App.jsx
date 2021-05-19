@@ -4,6 +4,7 @@ import axios from 'axios';
 import QuoteForm from './QuoteForm';
 import QuoteDisplay from './QuoteDisplay';
 import Portal from './Portal';
+import Header from './Header';
 
 class App extends Component {
   constructor() {
@@ -14,8 +15,10 @@ class App extends Component {
       loading: true,
       isQuotePortal: false,
     };
-
+    this.openQuotePortal = this.openQuotePortal.bind(this);
     this.closeQuotePortal = this.closeQuotePortal.bind(this);
+    this.getNewQuote = this.getNewQuote.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -33,12 +36,36 @@ class App extends Component {
       }));
   }
 
+  handleKeyPress(e) {
+    if (e.key === 'q') {
+      this.getNewQuote();
+    }
+  }
+
+  getNewQuote() {
+    this.setState(() => ({ loading: true }));
+    axios.get('/api/quote')
+      .then(({ data }) => this.setState({
+        loading: false,
+        quote: data,
+      }));
+  }
+
+  openQuotePortal() {
+    this.setState({ isQuotePortal: true });
+  }
+
   closeQuotePortal() {
-    this.setState({ isQuotePortal: false })
+    this.setState({ isQuotePortal: false });
   }
 
   render() {
-    const { bgImage, quote, loading, isQuotePortal } = this.state;
+    const {
+      bgImage,
+      quote,
+      loading,
+      isQuotePortal,
+    } = this.state;
 
     const bodyDivStyle = {
       width: '100vw',
@@ -54,20 +81,18 @@ class App extends Component {
           className="fade-in-bg"
           style={bodyDivStyle}
         >
-          <div className="header">
-            <span
-              id="addQuote"
-              onClick={() => this.setState({ isQuotePortal: true })}
-            >Add A Quote</span>
-            <div>
-              Current Temp
-            </div>
-          </div>
+          <Header
+            openQuotePortal={this.openQuotePortal}
+            handleKeyPress={this.handleKeyPress}
+          />
           <div className="container">
             {!loading
+              && !isQuotePortal
               && (
                 <QuoteDisplay
                   quote={quote}
+                  onClick={this.getNewQuote}
+                  handleKeyPress={this.handleKeyPress}
                 />
               )}
             <Portal

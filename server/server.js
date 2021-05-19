@@ -22,7 +22,12 @@ app.get('/api/quote', (req, res) => {
 });
 
 app.post('/api/quotes', (req, res) => {
-  quotes.saveQuote(req.body).save((err) => {
+  let { quote, author } = req.body;
+
+  if (author === null) {
+    author = undefined;
+  }
+  quotes.saveQuote({ quote, author }).save((err) => {
     if (err) {
       res.status(500).send('Error saving to the DB \n' + err);
       return;
@@ -32,13 +37,21 @@ app.post('/api/quotes', (req, res) => {
 });
 
 // ========== UNSPLASH ROUTES ================
-
 app.get('/api/background', (req, res) => {
   axios.get('https://api.unsplash.com/photos/random?orientation=landscape', {
     headers: {
       Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
     },
   }).then(({ data }) => res.send(data));
+});
+
+// ========== WEATHER ROUTES ================
+app.get('/api/weather', (req, res) => {
+  const { lat, lon } = req.query;
+  // axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
+  //   .then(({ data }) => res.send(data));
+
+  res.send(require('../sampleWeather'));
 });
 
 module.exports = app;
