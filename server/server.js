@@ -9,7 +9,7 @@ const quotes = require('./database/controllers/quotes');
 
 const app = express();
 
-app.use('/', express.static(path.join(__dirname, '../client/dist')));
+app.use('/', express.static(path.join(__dirname, '../client', 'dist')));
 app.use(express.json());
 
 // ========== QUOTE ROUTES ================
@@ -21,16 +21,10 @@ app.get('/api/quote', (req, res) => {
     });
 });
 
-const isAuthorEmpty = (req, res, next) => {
-  if (req.body === '') {
-    req.body = undefined;
-  }
-  next();
-};
+const isAuthorEmpty = require('./middleware/isAuthorEmpty');
 
 app.post('/api/quotes', isAuthorEmpty, (req, res) => {
   const { quote, author } = req.body;
-
   quotes.saveQuote({ quote, author }).save((err) => {
     if (err) {
       res.status(500).send('Error saving to the DB \n' + err);
@@ -52,10 +46,10 @@ app.get('/api/background', (req, res) => {
 // ========== WEATHER ROUTES ================
 app.get('/api/weather', (req, res) => {
   const { lat, lon } = req.query;
-  axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
-    .then(({ data }) => res.send(data));
+  // axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
+  //   .then(({ data }) => res.send(data));
 
-  // res.send(require('../sampleWeather'));
+  res.send(require('../Sample_Data/sampleWeather'));
 });
 
 module.exports = app;
