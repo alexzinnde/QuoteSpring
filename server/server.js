@@ -21,12 +21,16 @@ app.get('/api/quote', (req, res) => {
     });
 });
 
-app.post('/api/quotes', (req, res) => {
-  let { quote, author } = req.body;
-
-  if (author === null) {
-    author = undefined;
+const isAuthorEmpty = (req, res, next) => {
+  if (req.body === '') {
+    req.body = undefined;
   }
+  next();
+};
+
+app.post('/api/quotes', isAuthorEmpty, (req, res) => {
+  const { quote, author } = req.body;
+
   quotes.saveQuote({ quote, author }).save((err) => {
     if (err) {
       res.status(500).send('Error saving to the DB \n' + err);
@@ -48,10 +52,10 @@ app.get('/api/background', (req, res) => {
 // ========== WEATHER ROUTES ================
 app.get('/api/weather', (req, res) => {
   const { lat, lon } = req.query;
-  // axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
-  //   .then(({ data }) => res.send(data));
+  axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.WEATHER_API_KEY}`)
+    .then(({ data }) => res.send(data));
 
-  res.send(require('../sampleWeather'));
+  // res.send(require('../sampleWeather'));
 });
 
 module.exports = app;

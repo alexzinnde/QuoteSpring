@@ -22,18 +22,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // axios.get('/api/background')
-    //   .then(({ data }) => this.setState({
-    //     bgImage: data.urls.full,
-    //   }));
-
-    setTimeout(() => this.setState({ bgImage: 'https://images.unsplash.com/photo-1619139529130-f168eccd80d0?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyMzIwMTJ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjE0MzQwOTM&ixlib=rb-1.2.1&q=85' }), 200);
-
-    axios.get('/api/quote')
-      .then(({ data }) => this.setState({
-        loading: false,
-        quote: data,
-      }));
+    this.getBackgrounImage();
+    this.getQuote();
   }
 
   handleKeyPress(e) {
@@ -42,13 +32,24 @@ class App extends Component {
     }
   }
 
-  getNewQuote() {
-    this.setState(() => ({ loading: true }));
+  getBackgrounImage() {
+    axios.get('/api/background')
+      .then(({ data }) => this.setState({
+        bgImage: data.urls.full,
+      }));
+  }
+
+  getQuote() {
     axios.get('/api/quote')
       .then(({ data }) => this.setState({
         loading: false,
         quote: data,
       }));
+  }
+
+  getNewQuote() {
+    this.setState(() => ({ loading: true }));
+    this.getQuote();
   }
 
   openQuotePortal() {

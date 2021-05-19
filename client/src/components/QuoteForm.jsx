@@ -27,7 +27,7 @@ const QuoteForm = ({ close }) => {
               close();
             });
         }}
-        autoComplete="new-password"
+        autoComplete="1asdff"
       >
         <input
           type="text"
@@ -35,6 +35,7 @@ const QuoteForm = ({ close }) => {
           placeholder="Quote..."
           value={quote}
           onChange={(e) => setQuote(e.target.value)}
+          autoComplete="1asdff"
         />
         <input
           type="text"
@@ -42,6 +43,7 @@ const QuoteForm = ({ close }) => {
           placeholder="Author.."
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
+          autoComplete="1asdff"
         />
         <button type="submit">submit</button>
         <button
