@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaTemperatureHigh } from 'react-icons/fa';
+import { FaTemperatureHigh, FaMapPin } from 'react-icons/fa';
 import axios from 'axios';
 
 const getGeoLocation = (callback) => {
@@ -30,10 +30,20 @@ const WeatherWidget = () => {
 
   return (
     <div>
-      <FaTemperatureHigh
-        color="white"
+      <FaMapPin
+        color="#fff"
+        size="15"
       />
-      {weatherData.main.temp.toFixed(0)}
+      {' '}
+      {weatherData.name}
+      {' | '}
+      <FaTemperatureHigh
+        color="#fff"
+      />
+      {' '}
+      {weatherData.main.feels_like.toFixed(0)}
+      {' | '}
+      {weatherData.weather[0].description}
     </div>
   );
 };

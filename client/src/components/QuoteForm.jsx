@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
 
 const saveQuote = (author, quote) => axios({
@@ -18,15 +17,17 @@ const QuoteForm = ({ close }) => {
   return (
     <div className="portal-box">
       <h2>Add A Quote</h2>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        saveQuote(author, quote)
-          .then(() => {
-            setAuthor('');
-            setQuote('');
-            close();
-          });
-      }}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          saveQuote(author, quote)
+            .then(() => {
+              setAuthor('');
+              setQuote('');
+              close();
+            });
+        }}
+        autoComplete="new-password"
       >
         <input
           type="text"
@@ -42,7 +43,7 @@ const QuoteForm = ({ close }) => {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <button type="submit" >submit</button>
+        <button type="submit">submit</button>
         <button
           type="button"
           onClick={() => close()}
