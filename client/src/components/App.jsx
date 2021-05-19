@@ -3,15 +3,19 @@ import axios from 'axios';
 
 import QuoteForm from './QuoteForm';
 import QuoteDisplay from './QuoteDisplay';
+import Portal from './Portal';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       bgImage: '',
-      quotes: [],
+      quote: '',
       loading: true,
+      isQuotePortal: false,
     };
+
+    this.closeQuotePortal = this.closeQuotePortal.bind(this);
   }
 
   componentDidMount() {
@@ -20,26 +24,21 @@ class App extends Component {
     //     bgImage: data.urls.full,
     //   }));
 
-    axios.get('/api/quotes')
+    setTimeout(() => this.setState({ bgImage: 'https://images.unsplash.com/photo-1619139529130-f168eccd80d0?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyMzIwMTJ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjE0MzQwOTM&ixlib=rb-1.2.1&q=85' }), 200);
+
+    axios.get('/api/quote')
       .then(({ data }) => this.setState({
         loading: false,
-        quotes: data,
+        quote: data,
       }));
   }
 
-  render() {
-    const { bgImage, quotes, loading } = this.state;
+  closeQuotePortal() {
+    this.setState({ isQuotePortal: false })
+  }
 
-    const containerStyle = {
-      width: '25%',
-      height: '25%',
-      margin: 'auto',
-      border: '1px solid black',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-    };
+  render() {
+    const { bgImage, quote, loading, isQuotePortal } = this.state;
 
     const bodyDivStyle = {
       width: '100vw',
@@ -47,27 +46,40 @@ class App extends Component {
       backgroundImage: `url('${bgImage}')`,
       backgroundRepeat: 'none',
       backgroundSize: 'cover',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
     };
 
     return (
-      <div style={bodyDivStyle}>
-        <div style={containerStyle}>
-
-          {!loading
-            && (
-              <QuoteDisplay
-                quote={quotes[0]}
-
+      <>
+        <div
+          className="fade-in-bg"
+          style={bodyDivStyle}
+        >
+          <div className="header">
+            <span
+              id="addQuote"
+              onClick={() => this.setState({ isQuotePortal: true })}
+            >Add A Quote</span>
+            <div>
+              Current Temp
+            </div>
+          </div>
+          <div className="container">
+            {!loading
+              && (
+                <QuoteDisplay
+                  quote={quote}
+                />
+              )}
+            <Portal
+              open={isQuotePortal}
+            >
+              <QuoteForm
+                close={this.closeQuotePortal}
               />
-            )}
-
-          <QuoteForm />
+            </Portal>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

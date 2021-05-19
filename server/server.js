@@ -13,9 +13,12 @@ app.use('/', express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // ========== QUOTE ROUTES ================
-app.get('/api/quotes', (req, res) => {
+app.get('/api/quote', (req, res) => {
   quotes.getQuotes()
-    .then((allQuotes) => res.send(allQuotes));
+    .then((allQuotes) => {
+      const randomIndex = Math.floor(Math.random() * allQuotes.length);
+      res.send(allQuotes[randomIndex]);
+    });
 });
 
 app.post('/api/quotes', (req, res) => {

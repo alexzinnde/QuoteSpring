@@ -10,37 +10,39 @@ const saveQuote = (author, quote) => axios({
   },
 });
 
-const QuoteForm = () => {
+const QuoteForm = ({ close }) => {
   const [author, setAuthor] = useState('');
   const [quote, setQuote] = useState('');
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      saveQuote(author, quote)
-        .then(() => {
-          setAuthor('');
-          setQuote('');
-          console.log('save complete');
-        });
-    }}
-    >
-      <input
-        type="text"
-        name="author"
-        placeholder="Author.."
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
-      <input
-        type="text"
-        name="quote"
-        placeholder="Quote..."
-        value={quote}
-        onChange={(e) => setQuote(e.target.value)}
-      />
-      <input type="submit" />
-    </form>
+    <div className="portal-box">
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        saveQuote(author, quote)
+          .then(() => {
+            setAuthor('');
+            setQuote('');
+            close();
+          });
+      }}
+      >
+        <input
+          type="text"
+          name="quote"
+          placeholder="Quote..."
+          value={quote}
+          onChange={(e) => setQuote(e.target.value)}
+        />
+        <input
+          type="text"
+          name="author"
+          placeholder="Author.."
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
 
