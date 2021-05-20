@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/quote_spring', { useNewUrlParser: true, useUnifiedTopology: true });
+const DB_URI = process.env.DB_URI || 'mongodb://localhost/quote_spring'
+mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 

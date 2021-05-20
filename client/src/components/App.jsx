@@ -74,6 +74,7 @@ class App extends Component {
       backgroundImage: `url('${bgImage}')`,
       backgroundRepeat: 'none',
       backgroundSize: 'cover',
+      backgroundPosition: 'center',
     };
 
     return (
