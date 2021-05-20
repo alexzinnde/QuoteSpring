@@ -9,9 +9,12 @@ const quotes = require('./database/controllers/quotes');
 
 const app = express();
 
-app.use('/', express.static(path.join(__dirname, 'client', 'dist')));
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 app.use(express.json());
 
+app.get('/', (request, response) => {
+  response.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
 // ========== QUOTE ROUTES ================
 app.get('/api/quote', (req, res) => {
   quotes.getQuotes()
