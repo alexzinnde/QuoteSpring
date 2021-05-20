@@ -1,0 +1,99 @@
+html, body {
+  margin: 0px;
+  padding: 0px;
+  color: white;
+  font-family: 'Martel', serif;
+}
+#addQuote {
+  letter-spacing: .1rem;
+  animation: none;
+  cursor: pointer;
+  padding: 5px;
+
+}
+
+.header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  /* background-color: rgba(119,119,119,.1); */
+}
+
+.container {
+  position: relative;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+.card {
+  width: 75%;
+  height: 25%;
+  margin: auto;
+}
+.portal-box {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 20%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+}
+.portal-box h2 {
+  margin:  10px auto;
+}
+.portal-box form {
+  margin: 10px auto;
+  width: 80%;
+}
+.portal-box input[type='text'] {
+  width: 100%;
+  height: 1rem;
+  margin: 5px 0;
+}
+
+.portal-box button {
+  width: 101%;
+  margin: 5px 0;
+  height: 2rem;
+  border: none;
+  color: black;
+  background-color: ghostwhite;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quote {
+  letter-spacing: .2rem;
+  font-size: 2.8rem;
+  color: white;
+  cursor: pointer;
+}
+.author {
+  color: rgb(240, 240, 240);
+  text-align: right;
+  font-size: 2rem;
+}
+
+.fade-in {
+  animation: fadeIn 3s ease-in forwards;
+}
+
+.fade-in-bg {
+  animation: fadeIn .5s ease-in 1 forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    letter-spacing: .4rem;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    letter-spacing: .2rem;
+  }
+}
+
