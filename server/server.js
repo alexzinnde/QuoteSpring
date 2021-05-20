@@ -9,7 +9,7 @@ const quotes = require('./database/controllers/quotes');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../client', 'dist')));
+app.use('/', express.static(path.join(__dirname, 'client', 'dist')));
 app.use(express.json());
 
 // ========== QUOTE ROUTES ================
